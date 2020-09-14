@@ -1,0 +1,11 @@
+car_type;brand;passenger_seats_count;photo_file_name;body_whl;carrying;extra
+carrr;Nissan xTtrail;4;f1.jpeg;;2;
+car;123;4;f1.jpeg;;asd;
+car_listcar_list_2.append(row)
+;;;
+spec_machine;Hitachi;;f4.png;;1.2;dasdas
+spec_machine;Hitachi;;f4.jpeg;;1.2;фыафыа
+truck;Man;f2.png;;210;
+truck;Man;;f2.jpeg;;3;
+truck;Volvo;f2.png;8x0x2.5;asd;
+truck;Man;f2.png;0x3x2.5;20;
