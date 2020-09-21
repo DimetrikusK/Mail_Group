@@ -18,6 +18,23 @@ class File:
                     f.write(j.read()), (f.write(n.read()))
         return file
 
+    # def __iter__(self):
+    #     return self
+    #
+    # def __next__(self):
+    #     tmp = []
+    #     with open(self.dir, 'r') as f:
+    #         for i in f:
+    #             tmp.append(i.split(','))
+    #     return tmp
+
+    def __getitem__(self, item):
+        tmp = []
+        with open(self.dir, 'r') as f:
+            for i in f:
+                tmp.append(i.split(','))
+        return tmp[item]
+
     def __str__(self):
         return self.dir
 
@@ -45,6 +62,9 @@ file_obj_2 = File(path_to_file + '_2')
 file_obj_1.write('line 1\n')
 file_obj_2.write('line 2\n')
 new_file_obj = file_obj_1 + file_obj_2
-print(new_file_obj)
-print(isinstance(new_file_obj, File))
-print(type(new_file_obj))
+# print(new_file_obj)
+# print(isinstance(new_file_obj, File))
+# print(type(new_file_obj))
+
+for line in new_file_obj:
+    print(ascii(line))
