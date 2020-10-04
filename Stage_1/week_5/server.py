@@ -24,7 +24,7 @@ response = b'ok\npalm.cpu 10.5 1501864247\neardrum.cpu 15.3 1501864259\npalm.cpu
 #     print(f'Получен запрос: {ascii(request)}')
 #     print(f'Отправлен ответ {ascii(tmp)}')
 #     conn.send(b'tmp')
-#
+# [["b'ok'"], [""], [""]]
 # sock.close()
 # conn.close()
 

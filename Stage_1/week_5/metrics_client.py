@@ -48,15 +48,15 @@ class Client:
                     metric_list = dick_metric.get(metric_key, [])
                     metric_list.append((metric_timestamp, metric_value))
                     dick_metric.update({metric_key: sorted(metric_list)})
-                elif metrics not in [[b'ok'], [""], [""]]:
+                elif metrics not in [["b'ok"], [""], ["'"]]:
                     raise ClientError
             return dick_metric
-        except socket.error as err:
-            raise ClientError(err)
+        except Exception:
+            raise ClientError
 
 
 
-client = Client("127.0.0.1", 2222, timeout=15)
-# # client.put("eardrum.cpu", 4, timestamp=1150864251)
+# client = Client("127.0.0.1", 2222, timeout=15)
+# print(client.get("*"))
+# client.put("eardrum.cpu", 4, timestamp=1150864251)
 # client.get("eardrum.memory")
-print(client.get("*"))
