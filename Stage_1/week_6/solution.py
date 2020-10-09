@@ -3,16 +3,24 @@ import asyncio
 
 def run_server(host, port):
     global stack
-    stack = str
+    global new_stack
+    stack = []
+    new_stack = []
 
     async def metric_server(reader, writer):
-        global stack
         data = await reader.read(1024)
         message = data.decode('utf-8')
-        # addr = writer.get_extra_info("peername")
+        addr = writer.get_extra_info("peername")
         command = ClientServerProtocol(message)
-        stack = (command.data_received())
-        print(stack)
+        tmp = (command.data_received())
+        if tmp == 'ok':
+            writer.write(b'ok\n\n')
+        elif tmp == "error\nwrong command\n":
+            writer.write(b'error\nwrong command\n')
+        else:
+            for i in tmp:
+                send = 'ok\n' + i[0:] + '\n'
+                writer.write(send.encode())
     loop = asyncio.get_event_loop()
     coro = asyncio.start_server(metric_server, host, port, loop=loop)
     server = loop.run_until_complete(coro)
@@ -20,7 +28,6 @@ def run_server(host, port):
         loop.run_forever()
     except KeyboardInterrupt:
         pass
-
     server.close()
     loop.run_until_complete(server.wait_closed())
     loop.close()
@@ -29,12 +36,10 @@ def run_server(host, port):
 class ClientServerProtocol:
 
     def __init__(self, command):
-        self.stack = []
         self.command = command.split()
-        self.string = str
+        self.string = command
 
     def data_received(self):
-        # return self.command[1:]
         if self.command[0] != 'put' and self.command[0] != 'get':
             return "error\nwrong command\n"
         elif self.command[0] == 'put' and len(self.command) != 4:
@@ -42,12 +47,19 @@ class ClientServerProtocol:
         elif self.command[0] == 'get' and len(self.command) > 2:
             return "error\nwrong command\n"
         elif self.command[0] == 'put':
-            for i in range(len(self.command[2:])):
-                self.string += ' ' + self.command[i]
-            return self.string
+            stack.append(self.string[4:])
+            return 'ok'
         elif self.command[0] == 'get':
             if self.command[1] == '*':
-                return self.stack
+                if len(stack) > 0:
+                    return stack
+                else:
+                    return "ok"
+            else:
+                for i in stack:
+                    if self.string[4:self.string.find('\n')] == i[0:len(self.string[4:self.string.find('\n')])]:
+                        new_stack.append(i)
+                return new_stack
 
 
-run_server('127.0.0.1', 2210)
+# run_server('127.0.0.1', 2223)

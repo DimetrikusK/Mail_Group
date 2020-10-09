@@ -56,7 +56,10 @@ class Client:
 
 
 
-client = Client("127.0.0.1", 2210, timeout=15)
-# print(client.get("*"))
-client.put("eardrsdum.cpu", 4, timestamp=1150864251)
-# client.get("eardrum.memory")
+client = Client("127.0.0.1", 2223, timeout=15)
+# client.put("em1.cpu", 4, timestamp=1150864251)
+# client.put("em.cpu", 4, timestamp=1150864251)
+# client.put("em2.cpu", 4, timestamp=1150864251)
+print(client.get("*"))
+# client.get("em.cpu")
+# client.put("em.cpu", 4, timestamp=1150864251)
