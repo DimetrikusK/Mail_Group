@@ -55,11 +55,10 @@ class Client:
             raise ClientError
 
 
-
 client = Client("127.0.0.1", 2223, timeout=15)
-# client.put("em1.cpu", 4, timestamp=1150864251)
-# client.put("em.cpu", 4, timestamp=1150864251)
-# client.put("em2.cpu", 4, timestamp=1150864251)
+client.put("em1.cpu", 4, timestamp=1150864251)
+client.put("em.cpu", 4, timestamp=1150864251)
+client.put("em2.cpu", 4, timestamp=1150864251)
 print(client.get("*"))
 # client.get("em.cpu")
 # client.put("em.cpu", 4, timestamp=1150864251)
