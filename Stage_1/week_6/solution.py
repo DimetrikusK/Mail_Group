@@ -1,9 +1,6 @@
 import asyncio
 
-storage = {}
-stack = []
-new_stack = []
-send = 'ok\n'
+storage = dict()
 
 
 class ClientServerProtocol(asyncio.Protocol):
@@ -34,47 +31,51 @@ def run_server(host, port):
 
 
 def proces_received(data):
-    string = data
     command = data.split()
     if command:
         if command[0] != 'put' and command[0] != 'get':
             return "error\nwrong command\n\n"
-        elif command[0] == 'put':
-            return sever_put(command, string)
+        elif command[0] == 'put' and len(command) == 4:
+            return sever_put(command[1], command[2], command[3])
         elif command[0] == 'get':
-            return sever_get(command, string)
+            return sever_get(command)
     else:
         return "error\nwrong command\n\n"
 
 
-def sever_put(command, string):
-    global stack
+def sever_put(key, value, time):
     try:
-        if len(command) == 4:
-            float(command[2])
-            float(command[3])
-            stack.append(string[4:])
-            return 'ok\n\n'
+        float(value)
+        float(time)
+        if not key in storage:
+            storage[key] = list()
+        if not (time, value) in storage[key]:
+            storage[key].append((time, value))
+            storage[key].sort(key=lambda x: x[0])
+        return 'ok\n\n'
     except ValueError:
         return "error\nwrong command\n\n"
 
 
-def sever_get(command, string):
-    global send
+def sever_get(command):
+    send = 'ok\n'
+    string = ''
     try:
         if command and command[1] and len(command) == 2:
-            if len(stack) == 0:
+            if len(storage) == 0:
                 return 'ok\n\n'
             if command[1] == '*':
-                for i in stack:
-                    send += i[0:]
-                return send + '\n'
-            if str(command[1]):
-                for i in stack:
-                    if string[4:string.find('\n')] == i[0:len(string[4:string.find('\n')])]:
-                        send += i
-                return send + '\n'
+                for key, values in storage.items():
+                    for value in values:
+                        string += key + ' ' + value[1] + ' ' + value[0] + '\n'
+                return send + string + '\n'
+            else:
+                if command[1] in storage:
+                    for value in storage[command[1]]:
+                        string += command[1] + ' ' + value[1] + ' ' + value[0] + '\n'
+                return send + string + '\n'
     except:
         return "error\nwrong command\n\n"
+    #
 
-# run_server('127.0.0.1', 2224)
+# run_server('127.0.0.1', 2225)
