@@ -48,10 +48,11 @@ def sever_put(key, value, time):
         float(value)
         float(time)
         if not key in storage:
-            storage[key] = list()
+            storage[key] = dict()
         if not (time, value) in storage[key]:
-            storage[key].append((time, value))
-            storage[key].sort(key=lambda x: x[0])
+            if '.' not in value:
+                value += '.0'
+            storage[key][time] = value
         return 'ok\n\n'
     except ValueError:
         return "error\nwrong command\n\n"
@@ -66,16 +67,16 @@ def sever_get(command):
                 return 'ok\n\n'
             if command[1] == '*':
                 for key, values in storage.items():
-                    for value in values:
-                        string += key + ' ' + value[1] + ' ' + value[0] + '\n'
+                    for k, v in values.items():
+                        string += key + ' ' + v + ' ' + k + '\n'
                 return send + string + '\n'
             else:
                 if command[1] in storage:
-                    for value in storage[command[1]]:
-                        string += command[1] + ' ' + value[1] + ' ' + value[0] + '\n'
+                    for k, v in storage[command[1]].items():
+                        string += command[1] + ' ' + v + ' ' + k + '\n'
                 return send + string + '\n'
     except:
         return "error\nwrong command\n\n"
-    #
+
 
 # run_server('127.0.0.1', 2225)

@@ -56,13 +56,13 @@ class Client:
 
 
 client = Client("127.0.0.1", 2225, timeout=15)
-client.put("test_multivalue_key", 12.0, timestamp=1503319740)
+client.put("test_float_value", 42, timestamp=503319345)
 client.put("test_multivalue_key", 10.678, timestamp=1503319748)
 client.put("test_multivalue_key", 12.5, timestamp=1503319748)
-client.put("tes2t_key", 12.0, timestamp=1503319742)
-client.put("palm.cpu", 23.7, timestamp=1503319740)
+# client.put("tes2t_key", 12.0, timestamp=1503319742)
+# client.put("palm.cpu", 23.7, timestamp=1503319740)
 # client.put("*")client_input0
-# print(client.get("test_multivalue_key"))string
+# print(client.get("test_multivalue_key"))
 print(client.get("*"))
 # client.put("em.cpu", 4, timestamp=1150864251)
 
