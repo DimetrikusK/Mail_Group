@@ -114,7 +114,7 @@ def get_car_list(csv_filename):
 
 
 # #
-# car = get_car_list('/Users/jsabina/PycharmProjects/Mail_Group/Stage_1/week_3/cars.csv')
+# car = get_car_list('/Users/jsabina/PycharmProjects/Mail_Group/Dive into python/week_3/cars.csv')
 # print(len(car))
 # spec_machine = SpecMachine('Komatsu-D355', 'd355', '93', 'pipelayer specs')
 # print(spec_machine.get_photo_file_ext())

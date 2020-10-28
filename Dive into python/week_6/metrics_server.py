@@ -19,12 +19,10 @@ def run_server(host, port):
     loop = asyncio.get_event_loop()
     coro = loop.create_server(ClientServerProtocol, host, port)
     server = loop.run_until_complete(coro)
-
     try:
         loop.run_forever()
     except KeyboardInterrupt:
         pass
-
     server.close()
     loop.run_until_complete(server.wait_closed())
     loop.close()
@@ -50,9 +48,9 @@ def sever_put(key, value, time):
         if not key in storage:
             storage[key] = dict()
         if not (time, value) in storage[key]:
-            if '.' not in value:
-                value += '.0'
-            storage[key][time] = value
+            # if '.' not in value:
+            #     value += '.0'
+            storage[key][time] = float(value)
         return 'ok\n\n'
     except ValueError:
         return "error\nwrong command\n\n"
@@ -79,4 +77,4 @@ def sever_get(command):
         return "error\nwrong command\n\n"
 
 
-# run_server('127.0.0.1', 2225)
+run_server('127.0.0.1', 2227)

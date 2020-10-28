@@ -55,7 +55,7 @@ class Client:
             raise ClientError
 
 
-client = Client("127.0.0.1", 2225, timeout=15)
+client = Client("127.0.0.1", 2227, timeout=15)
 client.put("test_float_value", 42, timestamp=503319345)
 client.put("test_multivalue_key", 10.678, timestamp=1503319748)
 client.put("test_multivalue_key", 12.5, timestamp=1503319748)
